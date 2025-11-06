@@ -52,7 +52,7 @@ struct ListView: View {
         }
         .genericAlert(
             isPresented: $showAlert,
-            message: "Está seguro de eliminar?",
+            message: "¿Está seguro de eliminar?",
             confirmText: "Eliminar"
         ) {
             if let item = itemToDelete {

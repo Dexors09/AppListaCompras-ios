@@ -34,22 +34,21 @@ struct TotalCardView: View {
                     .foregroundColor(.gray)
                 Spacer()
                 
-                HStack {
+                HStack(spacing: 4) {
                     Text("Presupuesto")
                         .font(.subheadline)
                         .foregroundColor(.gray)
                     
-                    Text(isEditing ? "Ok" : "Editar")
-                        .font(.system(size: 13))
+                    Text(isEditing ? "Hecho" : "Editar")
+                        .frame(width: 48, height: 16, alignment: .center)
+                        .font(.system(size: 12.5))
                         .foregroundColor(theme.textPrimary.opacity(0.7))
                         .onTapGesture {
                             isEditing.toggle()
                         }
                         .padding(.vertical, 3)
-                        .padding(.horizontal, 8)
                         .background(theme.primaryColor.opacity(0.55).cornerRadius(4))
-                        
-                    
+  
                 }
                 
             }

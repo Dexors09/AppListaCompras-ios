@@ -79,7 +79,7 @@ struct MainView: View {
         }
         .genericAlert(
             isPresented: $showAlert,
-            message: "Está seguro de borrrar toda la lista?",
+            message: "¿Está seguro de borrrar toda la lista?",
             confirmText: "Eliminar"
         ) {
             vm?.clearLista()
