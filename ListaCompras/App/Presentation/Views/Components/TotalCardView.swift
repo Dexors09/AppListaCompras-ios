@@ -66,7 +66,7 @@ struct TotalCardView: View {
                         .fontWeight(.semibold)
                         .foregroundColor(theme.textPrimary.opacity(0.9))
                 }else{
-                    TextField("presupuesto", text: $budgetText)
+                    TextField("$0.00", text: $budgetText)
                         .padding(.leading, 30)
                         .font(.title3)
                         .keyboardType(.numberPad)
