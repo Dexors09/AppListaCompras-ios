@@ -15,6 +15,7 @@ struct ListaComprasApp: App {
             MainView()
                 .modelContainer(for: Articulo.self)
                 .appTheme(.default) // Inyecta el tema en toda la app
+                .preferredColorScheme(.dark)
         }
     }
 }

@@ -10,6 +10,7 @@ import SwiftData
 
 /// Vista de lista
 struct ListView: View {
+    @Environment(\.appTheme) private var theme
     @Binding var vm: ListaComprasViewModel
     @State private var showAlert = false
     @State private var itemToDelete: ArticuloEntity?

@@ -14,6 +14,7 @@ struct AppTheme {
     let horizontalPadding: CGFloat
     
     // Colors
+    let backgroundApp: Color
     let cardBackground: Color
     let primaryColor: Color
     let dangerColor: Color
@@ -27,6 +28,7 @@ struct AppTheme {
         cornerRadius: 10,
         cardPadding: 20,
         horizontalPadding: 16,
+        backgroundApp: Color(red: 45/255, green: 44/255, blue: 42/255),
         cardBackground: Color(red: 27/255, green: 38/255, blue: 49/255).opacity(0.9),
         primaryColor: .blue,
         dangerColor: .red,
