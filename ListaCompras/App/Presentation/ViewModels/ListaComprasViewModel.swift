@@ -91,14 +91,21 @@ class ListaComprasViewModel {
         budgetService.getProgress(total: total, budget: budget)
     }
     
+    func calculateNumberOfItems() -> Int {
+        return listaActual.count
+    }
+    
     //Data Refresh
     func loadArticulos() {
         do {
             listaActual = try getUseCase.execute()
             errorMessage = nil
+            let total = calculateTotal()
+            ListaComprasLiveActivityManager.shared.startOrUpdate(total: total)
         } catch {
             errorMessage = error.localizedDescription
             listaActual = []
+            ListaComprasLiveActivityManager.shared.end()
         }
     }
 }
