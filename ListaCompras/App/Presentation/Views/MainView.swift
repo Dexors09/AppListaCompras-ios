@@ -10,7 +10,6 @@ import SwiftUI
 /// Vista principal
 struct MainView: View {
     
-    @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) private var context
     @Environment(\.appTheme) private var theme
     
@@ -81,20 +80,6 @@ struct MainView: View {
         .onAppear {
             let repository = ArticuloRepository(context: context)
             vm = ListaComprasViewModel(repository: repository)
-        }
-        .onChange(of: scenePhase) { _, newPhase in
-            guard let vm else { return }
-            let total = vm.calculateTotal()
-
-            switch newPhase {
-            case .background, .inactive:
-                ListaComprasLiveActivityManager.shared.startOrUpdate(total: total)
-            case .active:
-                // Opcional: terminar la Live Activity al volver
-                ListaComprasLiveActivityManager.shared.end()
-            @unknown default:
-                break
-            }
         }
         .genericAlert(
             isPresented: $showAlert,

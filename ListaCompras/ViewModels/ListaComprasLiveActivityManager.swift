@@ -6,6 +6,7 @@
 //
 
 import ActivityKit
+import Foundation
 
 final class ListaComprasLiveActivityManager {
     static let shared = ListaComprasLiveActivityManager()
@@ -13,25 +14,18 @@ final class ListaComprasLiveActivityManager {
 
     private var activity: Activity<ListaComprasAttributes>?
 
-    func startOrUpdate(total: Double) {
-        print("LiveActivityManager.startOrUpdate total=\(total)")
-        guard ActivityAuthorizationInfo().areActivitiesEnabled else {
-            print("LiveActivityManager: activities NOT enabled")
-            return
-        }
+    func startOrUpdate(total: Double, totalItems: Int) {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled else {return}
 
-        let contentState = ListaComprasAttributes.ContentState(total: total)
+        let contentState = ListaComprasAttributes.ContentState(total: total, totalItems: totalItems)
         let attributes = ListaComprasAttributes()
 
         if let activity {
-            print("LiveActivityManager: updating existing activity")
             Task {
-                await activity.update(.init(state: contentState, staleDate: nil))
-                print("LiveActivityManager: update called")
+                await activity.update(.init(state: contentState, staleDate: Date().addingTimeInterval(120)))
             }
         } else {
-            print("LiveActivityManager: requesting NEW activity")
-            let content = ActivityContent(state: contentState, staleDate: nil)
+            let content = ActivityContent(state: contentState, staleDate: Date().addingTimeInterval(120))
             Task {
                 do {
                     activity = try Activity.request(
@@ -39,7 +33,6 @@ final class ListaComprasLiveActivityManager {
                         content: content,
                         pushType: nil
                     )
-                    print("LiveActivityManager: request OK")
                 } catch {
                     print("LiveActivityManager: request FAILED: \(error)")
                 }
@@ -48,7 +41,6 @@ final class ListaComprasLiveActivityManager {
     }
 
     func end() {
-        print("LiveActivityManager.end()")
         Task {
             await activity?.end(nil, dismissalPolicy: .immediate)
             activity = nil

@@ -11,5 +11,6 @@ import Foundation
 struct ListaComprasAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {
         var total: Double
+        var totalItems: Int
     }
 }

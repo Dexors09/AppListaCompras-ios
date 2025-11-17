@@ -92,7 +92,13 @@ class ListaComprasViewModel {
     }
     
     func calculateNumberOfItems() -> Int {
-        return listaActual.count
+        
+        var totalItems: Int = 0
+        listaActual.forEach { art in
+            totalItems += art.cantidad
+        }
+        
+        return totalItems
     }
     
     //Data Refresh
@@ -101,7 +107,11 @@ class ListaComprasViewModel {
             listaActual = try getUseCase.execute()
             errorMessage = nil
             let total = calculateTotal()
-            ListaComprasLiveActivityManager.shared.startOrUpdate(total: total)
+            let totalItems = calculateNumberOfItems()
+            if total > 0 {
+                ListaComprasLiveActivityManager.shared.startOrUpdate(total: total, totalItems: totalItems)
+            }
+            
         } catch {
             errorMessage = error.localizedDescription
             listaActual = []
