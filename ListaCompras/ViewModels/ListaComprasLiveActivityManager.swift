@@ -19,13 +19,14 @@ final class ListaComprasLiveActivityManager {
 
         let contentState = ListaComprasAttributes.ContentState(total: total, totalItems: totalItems)
         let attributes = ListaComprasAttributes()
+        let time: Date = .now + 60
 
         if let activity {
             Task {
-                await activity.update(.init(state: contentState, staleDate: Date().addingTimeInterval(120)))
+                await activity.update(.init(state: contentState, staleDate: time))
             }
         } else {
-            let content = ActivityContent(state: contentState, staleDate: Date().addingTimeInterval(120))
+            let content = ActivityContent(state: contentState, staleDate: time)
             Task {
                 do {
                     activity = try Activity.request(
