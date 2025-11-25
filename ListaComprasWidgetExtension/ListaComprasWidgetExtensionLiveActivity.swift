@@ -45,7 +45,6 @@ struct ListaComprasWidgetExtensionLiveActivity: Widget {
         } dynamicIsland: { context in
             DynamicIsland {
                 // Expanded
-                
                 DynamicIslandExpandedRegion(.leading) {
                     Spacer()
                     Image(systemName: "cart")
@@ -85,10 +84,12 @@ struct ListaComprasWidgetExtensionLiveActivity: Widget {
              
                 
             } compactTrailing: {
-                Text("Total: ")
-                + Text(String(format: "$%.0f", context.state.total))
+                HStack{
+                    Text("Total: ")
+                    Text(String(format: "$%.2f", context.state.total))
+                }
             } minimal: {
-                Text(String(format: "$%.0f", context.state.total))
+                Text(String(format: "$%.2f", context.state.total))
             }
         }
     }

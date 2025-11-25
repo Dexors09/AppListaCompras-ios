@@ -74,6 +74,7 @@ class ListaComprasViewModel {
             try clearUseCase.execute()
             loadArticulos()
             errorMessage = nil
+            ListaComprasLiveActivityManager.shared.end()
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -108,6 +109,7 @@ class ListaComprasViewModel {
             errorMessage = nil
             let total = calculateTotal()
             let totalItems = calculateNumberOfItems()
+            
             if total > 0 {
                 ListaComprasLiveActivityManager.shared.startOrUpdate(total: total, totalItems: totalItems)
             }
