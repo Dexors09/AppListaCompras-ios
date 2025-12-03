@@ -12,8 +12,8 @@ struct MainView: View {
     
     @Environment(\.modelContext) private var context
     @Environment(\.appTheme) private var theme
-    @State private var vm: ListaComprasViewModel?
     
+    @State private var vm: ListaComprasViewModel?
     @State private var nombre = ""
     @State private var cantidad = ""
     @State private var precio = ""
@@ -27,6 +27,10 @@ struct MainView: View {
     
     private var total: Double {
         vm?.calculateTotal() ?? 0
+    }
+    
+    private var numberOfItems: Int {
+        vm?.calculateNumberOfItems() ?? 0
     }
     
     private var budgetStatus: BudgetCalculationService.BudgetStatus {
@@ -48,7 +52,7 @@ struct MainView: View {
                 .padding(.horizontal, theme.horizontalPadding)
                 .foregroundColor(theme.textPrimary)
             
-            TotalCardView(budgetText: $presupuestoText, total: total, color: colorTotal)
+            TotalCardView(budgetText: $presupuestoText, total: total, color: colorTotal, numberOfItems: numberOfItems)
             
             FormCardView(nombre: $nombre, cantidad: $cantidad, precio: $precio, vm: $vm)
             

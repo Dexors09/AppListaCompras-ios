@@ -15,6 +15,7 @@ struct TotalCardView: View {
     @State private var isEditing = false
     var total: Double
     var color: Color
+    var numberOfItems: Int
     
     var budget: Double {
         Double(budgetText) ?? 0
@@ -31,13 +32,13 @@ struct TotalCardView: View {
             HStack {
                 Text("Total de Compra")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
+                    .foregroundColor(theme.textSecondary)
                 Spacer()
                 
                 HStack(spacing: 4) {
                     Text("Presupuesto")
                         .font(.subheadline)
-                        .foregroundColor(.gray)
+                        .foregroundColor(theme.textSecondary)
                     
                     Text(isEditing ? "Hecho" : "Editar")
                         .frame(width: 48, height: 16, alignment: .center)
@@ -81,6 +82,20 @@ struct TotalCardView: View {
                 .tint(color)
                 .scaleEffect(x: 1, y: 2, anchor: .center)
                 .animation(.easeInOut(duration: 0.6), value: progress)
+            
+            
+            //Numbero de articulos
+            HStack{
+                Text("Total de articulos: ")
+                    .font(.system(size: 18))
+                    .foregroundColor(theme.textSecondary)
+                
+                Text("\(numberOfItems)")
+                    .font(.system(size: 18))
+                    .fontWeight(.semibold)
+                    .foregroundStyle(theme.textPrimary)
+                
+            }
             
         }
         .padding(theme.cardPadding)

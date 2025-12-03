@@ -74,6 +74,7 @@ class ListaComprasViewModel {
             try clearUseCase.execute()
             loadArticulos()
             errorMessage = nil
+            ListaComprasLiveActivityManager.shared.end()
         } catch {
             errorMessage = error.localizedDescription
         }
@@ -91,14 +92,32 @@ class ListaComprasViewModel {
         budgetService.getProgress(total: total, budget: budget)
     }
     
+    func calculateNumberOfItems() -> Int {
+        
+        var totalItems: Int = 0
+        listaActual.forEach { art in
+            totalItems += art.cantidad
+        }
+        
+        return totalItems
+    }
+    
     //Data Refresh
     func loadArticulos() {
         do {
             listaActual = try getUseCase.execute()
             errorMessage = nil
+            let total = calculateTotal()
+            let totalItems = calculateNumberOfItems()
+            
+            if total > 0 {
+                ListaComprasLiveActivityManager.shared.startOrUpdate(total: total, totalItems: totalItems)
+            }
+            
         } catch {
             errorMessage = error.localizedDescription
             listaActual = []
+            ListaComprasLiveActivityManager.shared.end()
         }
     }
 }
